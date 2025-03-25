@@ -113,7 +113,7 @@ To run this project locally, follow these steps:
 
 ## Screenshots
 ### Homepage
-![Homepage Screenshot](app\static\images\image6.png)
+![Homepage Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image6.png)
 ![Homepage Screenshot](app\static\images\image5.png)
 
 ### Technical Interview Page
