@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Practice Questions</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <div class="interview-container">
+        <div class="interview-header">
+            <h1 class="animate__animated animate__fadeIn">DSA Practice Questions</h1>
+            <a href="/" class="btn back-btn">← Back to Home</a>
+        </div>
+
+        <!-- Easy Questions -->
+        <div class="difficulty-section easy-section">
+            <h2 class="section-title animate__animated animate__fadeIn">
+                <i class="fas fa-seedling cta-icon" style="color: #22c55e;"></i> Easy Questions
+            </h2>
+            <div class="questions-container">
+                <table class="dsa-table animate__animated animate__fadeInUp">
+                    <tbody>
+                        {% for i in range(5) %}
+                        <tr>
+                            <!-- Left Column (Questions 1-5) -->
+                            <td class="dsa-question">
+                                <span class="question-number">#{{ i + 1 }}</span>
+                                <span class="question-text">{{ easy[i] }}</span>
+                            </td>
+                            <!-- Right Column (Questions 6-10) -->
+                            <td class="dsa-question">
+                                {% if easy[i + 5] %}
+                                <span class="question-number">#{{ i + 6 }}</span>
+                                <span class="question-text">{{ easy[i + 5] }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Medium Questions -->
+        <div class="difficulty-section medium-section">
+            <h2 class="section-title animate__animated animate__fadeIn">
+                <i class="fas fa-bolt cta-icon" style="color: #f59e0b;"></i> Medium Questions
+            </h2>
+            <div class="questions-container">
+                <table class="dsa-table animate__animated animate__fadeInUp">
+                    <tbody>
+                        {% for i in range(5) %}
+                        <tr>
+                            <!-- Left Column (Questions 1-5) -->
+                            <td class="dsa-question">
+                                <span class="question-number">#{{ i + 1 }}</span>
+                                <span class="question-text">{{ medium[i] }}</span>
+                            </td>
+                            <!-- Right Column (Questions 6-10) -->
+                            <td class="dsa-question">
+                                {% if medium[i + 5] %}
+                                <span class="question-number">#{{ i + 6 }}</span>
+                                <span class="question-text">{{ medium[i + 5] }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Hard Questions -->
+        <div class="difficulty-section hard-section">
+            <h2 class="section-title animate__animated animate__fadeIn">
+                <i class="fas fa-skull-crossbones cta-icon" style="color: #ef4444;"></i> Hard Questions
+            </h2>
+            <div class="questions-container">
+                <table class="dsa-table animate__animated animate__fadeInUp">
+                    <tbody>
+                        {% for i in range(5) %}
+                        <tr>
+                            <!-- Left Column (Questions 1-5) -->
+                            <td class="dsa-question">
+                                <span class="question-number">#{{ i + 1 }}</span>
+                                <span class="question-text">{{ hard[i] }}</span>
+                            </td>
+                            <!-- Right Column (Questions 6-10) -->
+                            <td class="dsa-question">
+                                {% if hard[i + 5] %}
+                                <span class="question-number">#{{ i + 6 }}</span>
+                                <span class="question-text">{{ hard[i + 5] }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

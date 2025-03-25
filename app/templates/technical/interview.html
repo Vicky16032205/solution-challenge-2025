@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Interview Practice</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <div class="interview-container">
+        <div class="interview-header">
+            <h1 class="animate__animated animate__fadeIn">Technical Interview Practice</h1>
+            <button class="btn back-btn" onclick="window.location.href='/'">
+                ← Back to Home
+            </button>
+        </div>
+
+        <div class="card upload-section" id="uploadSection">
+            <div class="upload-label">
+                <div class="upload-box animate__animated animate__zoomIn">
+                    <div id="uploadPreview" class="file-preview"></div>
+                    <div class="upload-icon">💻</div>
+                    <h2>Upload Your Resume</h2>
+                    <p>PDF or TXT (Max 5MB)</p>
+                    <input type="file" id="resumeUpload" accept=".pdf,.txt" hidden>
+                    <label for="resumeUpload" class="btn btn-primary mt-2">
+                        Choose File
+                    </label>
+                </div>
+            </div>
+            <button id="startInterview" class="btn btn-primary hidden">Start Practice</button>
+        </div>
+
+        <div class="interview-section hidden" id="interviewSection">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="question-count" id="questionCount"></div>
+            </div>
+
+            <div class="question-flow animate__animated animate__fadeInUp">
+                <div class="question-header">
+                    <h3>Current Question</h3>
+                    <div class="timer" id="timer">00:00</div>
+                </div>
+                <div class="question-text" id="questionText"></div>
+                
+                <div class="answer-box">
+                    <textarea 
+                        id="answerInput" 
+                        placeholder="Type your technical answer here..."
+                        rows="6"
+                        class="answer-textarea"
+                    ></textarea>
+                </div>
+
+                <div class="controls">
+                    <button id="submitAnswer" class="btn btn-primary">
+                        Submit Answer
+                    </button>
+                    <button id="nextQuestion" class="btn btn-secondary hidden">
+                        Next Question →
+                    </button>
+                </div>
+
+                <div class="feedback-box animate__animated animate__fadeIn" id="feedbackBox"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/technical/interview.js"></script>
+</body>
+</html>

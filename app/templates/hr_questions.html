@@ -1,0 +1,105 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HR Questions</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .hr-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 16px;
+        }
+        .hr-question {
+            padding: 1.2rem;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+        .hr-question:hover {
+            transform: translateY(-2px);
+        }
+        .question-number {
+            color: #6366f1;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="hr-container">
+        <div class="header-section">
+            <a href="/" class="back-button">
+                ← Back to Home
+            </a>
+        </div>
+        <h1 class="page-title">Behavioral Interview Questions</h1>
+        
+        <div class="questions-container">
+            {% for question in questions %}
+            <div class="hr-question">
+                <span class="question-number">#{{ loop.index }}</span>
+                {{ question }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Questions</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="hr-container interview-container">
+        <div class="interview-header">
+            <h1 class="animate__animated animate__fadeIn">Behavioral Interview Questions</h1>
+            <a href="/" class="btn back-btn">← Back to Home</a>
+        </div>
+        
+        <div class="questions-container">
+            {% for item in questions_data %}
+            <div class="card hr-question animate__animated animate__fadeInUp" style="animation-delay: {{ loop.index * 0.1 }}s;">
+                <div class="question-header">
+                    <span class="question-number">#{{ loop.index }}</span>
+                    <span class="question-text">{{ item.question }}</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="dropdown-content">
+                    <strong>Sample Answer:</strong> {{ item.answer }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions = document.querySelectorAll('.hr-question');
+            questions.forEach(question => {
+                question.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
