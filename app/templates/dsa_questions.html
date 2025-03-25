@@ -24,19 +24,12 @@
             <div class="questions-container">
                 <table class="dsa-table animate__animated animate__fadeInUp">
                     <tbody>
-                        {% for i in range(5) %}
+                        {% for i in range(10) %}
                         <tr>
                             <!-- Left Column (Questions 1-5) -->
                             <td class="dsa-question">
                                 <span class="question-number">#{{ i + 1 }}</span>
                                 <span class="question-text">{{ easy[i] }}</span>
-                            </td>
-                            <!-- Right Column (Questions 6-10) -->
-                            <td class="dsa-question">
-                                {% if easy[i + 5] %}
-                                <span class="question-number">#{{ i + 6 }}</span>
-                                <span class="question-text">{{ easy[i + 5] }}</span>
-                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
@@ -53,19 +46,12 @@
             <div class="questions-container">
                 <table class="dsa-table animate__animated animate__fadeInUp">
                     <tbody>
-                        {% for i in range(5) %}
+                        {% for i in range(10) %}
                         <tr>
                             <!-- Left Column (Questions 1-5) -->
                             <td class="dsa-question">
                                 <span class="question-number">#{{ i + 1 }}</span>
                                 <span class="question-text">{{ medium[i] }}</span>
-                            </td>
-                            <!-- Right Column (Questions 6-10) -->
-                            <td class="dsa-question">
-                                {% if medium[i + 5] %}
-                                <span class="question-number">#{{ i + 6 }}</span>
-                                <span class="question-text">{{ medium[i + 5] }}</span>
-                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
@@ -82,19 +68,12 @@
             <div class="questions-container">
                 <table class="dsa-table animate__animated animate__fadeInUp">
                     <tbody>
-                        {% for i in range(5) %}
+                        {% for i in range(10) %}
                         <tr>
                             <!-- Left Column (Questions 1-5) -->
                             <td class="dsa-question">
                                 <span class="question-number">#{{ i + 1 }}</span>
                                 <span class="question-text">{{ hard[i] }}</span>
-                            </td>
-                            <!-- Right Column (Questions 6-10) -->
-                            <td class="dsa-question">
-                                {% if hard[i + 5] %}
-                                <span class="question-number">#{{ i + 6 }}</span>
-                                <span class="question-text">{{ hard[i + 5] }}</span>
-                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
