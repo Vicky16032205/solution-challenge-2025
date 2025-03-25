@@ -114,14 +114,13 @@ To run this project locally, follow these steps:
 ## Screenshots
 ### Homepage
 ![Homepage Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image6.png)
-![Homepage Screenshot](app\static\images\image5.png)
+![Homepage Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image5.png)
 
 ### Technical Interview Page
-![Technical Interview Screenshot](app\static\images\image4.png)
-![Technical Interview Screenshot](app\static\images\image3.png)
-
+![Technical Interview Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image4.png)
+![Technical Interview Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image3.png)
 ### HR Interview Page
-![HR Interview Screenshot](app\static\images\image2.png)
+![HR Interview Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image2.png)
 
 ## Future Development
 - **Real-Time Interview Simulation:** Add WebRTC for live mock interviews with AI.
