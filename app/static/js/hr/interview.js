@@ -1,3 +1,7 @@
+let mediaRecorder;
+let audioChunks = [];
+let isRecording = false;
+
 const elements = {
     resumeUpload: document.getElementById('resumeUpload'),
     submitHrAnswer: document.getElementById('submitHrAnswer'),
@@ -11,6 +15,7 @@ const elements = {
     hrQuestionCount: document.getElementById('hrQuestionCount'),
     loadingOverlay: document.getElementById('loadingOverlay'),
     uploadSection: document.getElementById('uploadSection'),
+    voiceButton: document.getElementById('voiceButton'),
     showResults: document.getElementById('showResults')
 };
 
@@ -29,6 +34,78 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('showResults')?.addEventListener('click', showFinalResults);
     document.getElementById('submitHrAnswer')?.addEventListener('click', submitAnswer);
     document.getElementById('nextHrAnswer')?.addEventListener('click', nextQuestion);
+    const btn = document.getElementById('startPractice');
+
+    function initMicrophone() {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    sendAudioToBackend(audioBlob);
+                    audioChunks = [];
+                };
+            })
+            .catch(error => {
+                console.error('Microphone access denied:', error);
+                alert('Please allow microphone access to use voice input.');
+            });
+    }
+
+    voiceButton.addEventListener('click', () => {
+        if (isRecording) {
+            stopRecording();
+            voiceButton.textContent = 'Start Voice Input';
+        } else {
+            startRecording();
+            voiceButton.textContent = 'Stop Voice Input';
+        }
+        isRecording = !isRecording;
+    });
+
+    function startRecording() {
+        if (mediaRecorder && mediaRecorder.state === 'inactive') {
+            audioChunks = []; // Clear previous chunks
+            mediaRecorder.start();
+            console.log('Recording started');
+        }
+    }
+    
+    function stopRecording() {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            mediaRecorder.stop();
+            console.log('Recording stopped');
+        }
+    }
+    
+    async function sendAudioToBackend(audioBlob) {
+        const answerInput = document.getElementById('hrAnswerInput');
+        answerInput.value = 'Transcribing...';
+    
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'recording.webm');
+    
+        try {
+            const response = await fetch('/transcribe', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            if (data.transcription) {
+                answerInput.value = data.transcription;
+            } else {
+                answerInput.value = '';
+                alert('Transcription failed: ' + (data.error || 'Unknown error'));
+            }
+        } catch (error) {
+            answerInput.value = '';
+            alert('An error occurred while transcribing your voice input.');
+            console.error('Transcription error:', error);
+        }
+    }
 
     function handleFileUpload(e) {
         const file = e.target.files[0];
@@ -54,23 +131,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         }
-        
         elements.startPractice?.classList.remove('hidden');
     }
 
     async function startPractice() {
         const file = elements.resumeUpload?.files[0];
+        
         if (!file) return;
     
         try {
             // Show loading state
             elements.loadingOverlay.classList.remove('hidden');
             elements.startPractice.disabled = true;
-    
+            
             const formData = new FormData();
             formData.append('file', file);
             formData.append('interview_type', 'hr');
-    
+            btn.disabled = true;
+            btn.innerHTML = `<div class="spinner small"></div> Processing...`;
             const response = await fetch('/upload', {
                 method: 'POST',
                 body: formData
@@ -84,8 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             hrSession.id = data.session_id;
             hrSession.questions = data.questions;
+            initMicrophone()
     
-            // Force UI transition
             elements.uploadSection.classList.add('hidden');
             elements.interviewSection.classList.remove('hidden');
             
@@ -99,6 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.startPractice.disabled = false;
         }
     }
+
+    
 
     // Add new results function
     async function showFinalResults() {
@@ -162,10 +242,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
             }
-        } finally {
+        } 
+        finally {
             elements.loadingOverlay.classList.add('hidden');
         }
     }
+    
 
     function createAnalysisCard(title, items) {
         if (!items.length) return '';

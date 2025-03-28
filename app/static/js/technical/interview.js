@@ -1,3 +1,7 @@
+let mediaRecorder;
+let audioChunks = [];
+let isRecording = false;
+
 let techSession = {
     id: null,
     questions: [],
@@ -28,7 +32,7 @@ document.getElementById('startInterview').addEventListener('click', async () => 
     const file = document.getElementById('resumeUpload').files[0];
     const btn = document.getElementById('startInterview');
     if (!file) return;
-
+    const answerInput = document.getElementById("answerInput");
     const formData = new FormData();
     formData.append('file', file);
     formData.append('interview_type', 'technical');
@@ -49,6 +53,7 @@ document.getElementById('startInterview').addEventListener('click', async () => 
         
         document.getElementById('uploadSection').classList.add('hidden');
         document.getElementById('interviewSection').classList.remove('hidden');
+        initMicrophone();
         startTimer();
         loadQuestion();
         
@@ -61,6 +66,79 @@ document.getElementById('startInterview').addEventListener('click', async () => 
         btn.innerHTML = 'Start Practice';
     }
 });
+
+function initMicrophone() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+            mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                sendAudioToBackend(audioBlob);
+                audioChunks = [];
+            };
+        })
+        .catch(error => {
+            console.error('Microphone access denied:', error);
+            alert('Please allow microphone access to use voice input.');
+        });
+}
+
+    const voiceButton = document.getElementById('voiceButton');
+    voiceButton.addEventListener('click', () => {
+        if (isRecording) {
+            stopRecording();
+            voiceButton.textContent = 'Start Voice Input';
+        } else {
+            startRecording();
+            voiceButton.textContent = 'Stop Voice Input';
+        }
+        isRecording = !isRecording;
+    });
+
+    function startRecording() {
+        if (mediaRecorder && mediaRecorder.state === 'inactive') {
+            audioChunks = []; // Clear previous chunks
+            mediaRecorder.start();
+            console.log('Recording started');
+        }
+    }
+    
+    // Stop recording function
+    function stopRecording() {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            mediaRecorder.stop();
+            console.log('Recording stopped');
+        }
+    }
+
+    async function sendAudioToBackend(audioBlob) {
+        const answerInput = document.getElementById('answerInput');
+        answerInput.value = 'Transcribing...';
+    
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'recording.webm');
+    
+        try {
+            const response = await fetch('/transcribe', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            if (data.transcription) {
+                answerInput.value = data.transcription;
+            } else {
+                answerInput.value = '';
+                alert('Transcription failed: ' + (data.error || 'Unknown error'));
+            }
+        } catch (error) {
+            answerInput.value = '';
+            alert('An error occurred while transcribing your voice input.');
+            console.error('Transcription error:', error);
+        }
+    }
 
 function startTimer() {
     techSession.startTime = Date.now();

@@ -1001,6 +1001,35 @@ textarea {
     margin-bottom: 0.5rem;
 }
 
+
+.voice-btn {
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 50px; /* Matches .btn pill shape */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  /* Microphone Icon Styling */
+  .voice-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    animation: iconPulse 2s infinite;
+  }
+
+  .voice-btn.recording {
+    background: #dc2626;
+  }
+  .voice-btn.recording .voice-icon::before {
+    content: "🔴";
+  }
+
 .detailed-feedback {
     text-align: left;
     border-top: 2px solid #e2e8f0;
@@ -1375,6 +1404,18 @@ textarea {
     left: 0.5rem;
     font-weight: bold;
 }
+
+@keyframes iconPulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 
 
 @media (max-width: 1024px) {

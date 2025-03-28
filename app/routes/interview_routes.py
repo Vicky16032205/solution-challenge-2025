@@ -1,4 +1,3 @@
-# app/routes/interview_routes.py (updated)
 from fastapi import APIRouter, UploadFile, HTTPException, Form, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
@@ -11,6 +10,13 @@ from PyPDF2 import PdfReader
 import google.generativeai as genai
 from app.utils.interview_utils import *
 
+from fastapi import FastAPI, UploadFile, File
+from google.cloud import speech
+
+app = FastAPI()
+
+GOOGLE_GEMINI_APPLICATIONS = os.getenv("GOOGLE_GEMINI_APPLICATIONS")
+
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 sessions = {}
@@ -22,7 +28,9 @@ def cleanup_sessions():
     for sid, session in sessions_copy.items():
         if current_time - session["start_time"] > SESSION_TIMEOUT:
             del sessions[sid]
-    threading.Timer(300, cleanup_sessions).start()
+    timer = threading.Timer(300, cleanup_sessions)
+    timer.start()  # Explicitly start the timer
+    return timer
 
 cleanup_sessions()
 
@@ -154,6 +162,29 @@ async def analyze_resume(session_id: str):
     except Exception as e:
         raise HTTPException(500, detail=str(e))
     
+@router.post("/transcribe")
+async def transcribe_audio(audio: UploadFile = File(...)):
+    try:
+        client = speech.SpeechClient()
+        content = await audio.read()
+        audio_file = speech.RecognitionAudio(content=content)
+        
+        # Updated config for WebM Opus audio
+        config = speech.RecognitionConfig(
+            encoding=speech.RecognitionConfig.AudioEncoding.WEBM_OPUS,
+            sample_rate_hertz=48000,  # Opus in WebM typically uses 48kHz
+            language_code="en-US",
+        )
+        
+        response = client.recognize(config=config, audio=audio_file)
+        if not response.results:
+            return {"transcription": "", "error": "No speech detected"}
+        
+        transcription = " ".join([result.alternatives[0].transcript for result in response.results])
+        return {"transcription": transcription}
+    except Exception as e:
+        return {"transcription": "", "error": str(e)}
+    
 def generate_dsa_questions(resume_text: str = "") -> Dict[str, List[str]]:
     try:
         genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
@@ -178,28 +209,6 @@ def generate_dsa_questions(resume_text: str = "") -> Dict[str, List[str]]:
     
     except Exception as e:
         return get_fallback_dsa_questions()
-
-# def generate_hr_questions2(resume_text: str = "") -> Dict[str, List[str]]:
-#     try:
-#         genai.configure(api_key=os.getenv("GEMINI_HR_API_KEY"))
-#         model = genai.GenerativeModel('gemini-2.0-flash')
-        
-#         prompt = f"""Generate 30 behavioral interview questions covering:
-#         - Teamwork and conflict resolution
-#         - Leadership and decision making
-#         - Communication and cultural fit
-        
-#         Return JSON format:
-#         {{
-#             "questions": ["question1", ...]
-#         }}
-#         """
-        
-#         response = model.generate_content(prompt)
-#         return parse_hr_response(response.text)
-    
-#     except Exception as e:
-#         return get_fallback_hr_questions()
 
 def generate_hr_questions2(resume_text: str = "") -> Dict[str, List[Dict]]:
     try:
@@ -233,13 +242,6 @@ def parse_dsa_response(text: str) -> Dict:
     except:
         return get_fallback_dsa_questions()
 
-# def parse_hr_response(text: str) -> Dict:
-#     try:
-#         json_str = re.search(r'\{.*\}', text, re.DOTALL).group()
-#         return json.loads(json_str)
-#     except:
-#         return get_fallback_hr_questions()
-
 def parse_hr_response(text: str) -> Dict:
     try:
         json_str = re.search(r'\{.*\}', text, re.DOTALL).group()
@@ -257,15 +259,6 @@ def get_fallback_dsa_questions():
         "medium": ["", "", ...],
         "hard": ["", "", ...]
     }
-
-# def get_fallback_hr_questions():
-#     return {
-#         "questions": [
-#             "Tell me about a team conflict you resolved",
-#             "Describe your leadership style",
-#             ...
-#         ]
-#     }
 
 def get_fallback_hr_questions():
     return {
@@ -302,17 +295,6 @@ async def dsa_questions_page(request: Request):  # Add request parameter
         "hard": cleaned["hard"]
     })
 
-# @router.get("/hr_questions", response_class=HTMLResponse)
-# async def hr_questions_page(request: Request):  # Add request parameter
-#     try:
-#         questions = generate_hr_questions2()
-#     except Exception as e:
-#         questions = get_fallback_hr_questions()
-    
-#     return templates.TemplateResponse("hr_questions.html", {
-#         "request": request,  # Pass request to context
-#         "questions": questions["questions"]
-#     })
 
 @router.get("/hr_questions", response_class=HTMLResponse)
 async def hr_questions_page(request: Request):

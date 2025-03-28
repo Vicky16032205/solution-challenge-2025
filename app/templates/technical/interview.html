@@ -49,12 +49,11 @@
                 <div class="question-text" id="questionText"></div>
                 
                 <div class="answer-box">
-                    <textarea 
-                        id="answerInput" 
-                        placeholder="Type your technical answer here..."
-                        rows="6"
-                        class="answer-textarea"
-                    ></textarea>
+                    <!-- <button id="voiceButton">Start Voice Input</button> -->
+                    <button id="voiceButton" class="btn voice-btn" data-state="start">
+                        <span class="voice-icon">🎤</span> <span class="voice-text">Start Voice Input</span>
+                    </button>
+                    <textarea id="answerInput" placeholder="Type your answer here or use voice input..." rows="6"></textarea>
                 </div>
 
                 <div class="controls">
@@ -70,6 +69,7 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08d9a8a6/dist/recorder.min.js"></script>
     <script src="/static/js/technical/interview.js"></script>
 </body>
 </html>

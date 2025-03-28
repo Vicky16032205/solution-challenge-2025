@@ -3,10 +3,13 @@ import os
 import re
 import json
 import bleach
+import logging
 import google.generativeai as genai
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
 from typing import List, Tuple, Dict
+
+logging.basicConfig(level=logging.WARNING)
 
 load_dotenv()
 
@@ -59,13 +62,15 @@ def analyze_resume_content(resume_text: str) -> Dict:
         genai.configure(api_key=os.getenv("GEMINI_HR_API_KEY"))
         model = genai.GenerativeModel('gemini-2.0-flash')
         
-        prompt = f"""Analyze this resume and extract:
+        prompt = f"""Analyze the following resume and extract:
         - 3 key roles
         - 5 top technical skills
         - 3 soft skills
+        Resume: {resume_text[:3000]}
         Format as JSON with keys: roles, skills, soft_skills"""
         
         response = model.generate_content(prompt)
+        logging.debug("Raw analysis response: %s", response.text)
         result = parse_analysis(response.text)
         return {
             "roles": result.get("roles", []),
@@ -74,13 +79,20 @@ def analyze_resume_content(resume_text: str) -> Dict:
         }
     
     except Exception as e:
+        logging.debug("analyze_resume_content error: %s", e)
         return get_fallback_analysis()
 
 def parse_analysis(text: str) -> Dict:
     try:
-        json_str = re.search(r'\{.*\}', text, re.DOTALL).group()
-        return json.loads(json_str)
-    except:
+        match = re.search(r'(\{.*\})', text, re.DOTALL)
+        if match:
+            json_str = match.group(1)
+            return json.loads(json_str)
+        else:
+            logging.debug("No JSON block found in API response. Full response: %s", text)
+            return get_fallback_analysis()
+    except Exception as e:
+        logging.debug("JSON parsing error: %s", e)
         return get_fallback_analysis()
 
 def get_fallback_analysis() -> Dict:
@@ -110,7 +122,7 @@ def evaluate_technical_answer(question: str, answer: str) -> Tuple[str, int]:
         6. End with "Recommendations for Improvement" as another heading, and list each recommendation as a bullet point.
         7. return your response as valid HTML only, with no code fences (no ```).
         8. Do not wrap your output in Markdown fences.
-
+        9. If user directly gives a negative response like they don't know about this, then give them a zero score explaining them it's not a good approach to tackle any question..
         Return ONLY valid HTML, no extra explanations.
         """
 
@@ -137,10 +149,11 @@ def evaluate_hr_answer(question: str, answer: str, resume_text: str) -> Tuple[st
         truncated_resume = resume_text[:2000]
         truncated_answer = answer[:1500]
         
-        prompt = f"""Evaluate HR answer (1-10 score):
+        prompt = f"""Evaluate HR answer (0-10 score):
         Resume: {truncated_resume}
         Question: {question}
         Answer: {truncated_answer}
+        If user directly say they do not know about the question, then give them a 0 score
         Provide score and feedback"""
         
         response = model.generate_content(prompt)
@@ -336,5 +349,5 @@ def format_feedback(text: str) -> str:
 
 def extract_score(text: str) -> int:
     match = re.search(r'(\d+)/10', text)
-    return min(10, max(1, int(match.group(1)))) if match else 5
+    return min(10, max(0, int(match.group(1)))) if match else 1
 

@@ -66,13 +66,11 @@
                         </div>
                         <div class="question-text" id="hrQuestionText"></div>
                     </div>
-            
-                    <textarea 
-                        id="hrAnswerInput"
-                        placeholder="Type your behavioral response here..."
-                        rows="6"
-                        class="answer-textarea"
-                    ></textarea>
+                    <!-- <button id="voiceButton">Start Voice Input</button> -->
+                    <button id="voiceButton" class="btn voice-btn" data-state="start">
+                        <span class="voice-icon">🎤</span> <span class="voice-text">Start Voice Input</span>
+                    </button>
+                    <textarea id="hrAnswerInput" placeholder="Type your answer here or use voice input..." rows="6"></textarea>
             
                     <div class="controls">
                         <button id="submitHrAnswer" class="btn btn-primary">Submit Response</button>
@@ -84,6 +82,7 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08d9a8a6/dist/recorder.min.js"></script>
     <script src="/static/js/hr/interview.js"></script>
 </body>
 </html>
