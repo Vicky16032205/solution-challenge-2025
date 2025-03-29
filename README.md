@@ -113,7 +113,7 @@ To run this project locally, follow these steps:
 ## Solution Challenge Submission Links
 
 - **GitHub Public Repository:** [https://github.com/Vicky16032205/solution-challenge-2025.git](https://github.com/Vicky16032205/solution-challenge-2025.git)
-- **Demo Video Link (3 Minutes):** [https://www.youtube.com/watch?v=your-video-id](https://www.youtube.com/watch?v=your-video-id)
+- **Demo Video Link (3 Minutes):** [https://youtu.be/wQrRw8ThJlI](https://youtu.be/wQrRw8ThJlI)
 - **MVP Link:** [https://solution-challenge-app.onrender.com](https://solution-challenge-app.onrender.com)
 
 ## Screenshots
