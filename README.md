@@ -1,7 +1,7 @@
 # AI Interview Helper
 
 ## Overview
-**AI Interview Helper** is an AI-powered interview preparation platform designed for the **Solution Challenge 2025**. It helps users prepare for technical and HR interviews by providing practice questions, mock interviews, and AI-generated feedback. The platform leverages Google’s Gemini APIs to analyze user responses and provide personalized feedback, and it was developed using the IDX platform for a seamless coding experience.
+**AI Interview Helper** is an AI-powered interview preparation platform designed for the **Solution Challenge 2025**. It helps users prepare for technical and HR interviews by providing practice questions, mock interviews, and AI-generated feedback. The platform now supports **audio answering**, allowing users to respond to questions verbally and receive feedback on their tone, clarity, and content.
 
 This project addresses the challenge of preparing for job interviews by offering a comprehensive tool that simulates real-world interview scenarios, making it easier for candidates to build confidence and improve their skills.
 
@@ -10,10 +10,12 @@ This project addresses the challenge of preparing for job interviews by offering
   - Practice coding questions categorized by difficulty (Easy, Medium, Hard).
   - Upload code or resumes for AI analysis using Gemini APIs.
   - Receive detailed feedback on technical responses.
+  - **New:** Answer technical questions via audio input and receive AI-generated feedback.
 - **HR Interview Preparation:**
   - Access a curated list of common HR questions.
   - Simulate HR interviews with AI-generated follow-up questions.
   - Get feedback on communication and behavioral responses.
+  - **New:** Respond to HR questions using audio input and get feedback on tone, clarity, and content.
 - **DSA Practice Questions:**
   - Explore a collection of Data Structures and Algorithms (DSA) questions.
   - Questions are organized into Easy, Medium, and Hard categories for progressive learning.
@@ -35,6 +37,7 @@ This project addresses the challenge of preparing for job interviews by offering
   - **Font Awesome**: For icons.
 - **APIs and Platforms:**
   - **Google Gemini APIs**: Used for AI-powered feedback on user responses (e.g., code analysis, behavioral feedback).
+  - **Web Speech API**: Used for capturing and processing audio inputs for technical and HR interviews.
 - **Deployment:**
   - **Render**: Hosted on Render for live deployment.
   - **GitHub**: Source code hosted on a public GitHub repository.
@@ -91,11 +94,13 @@ To run this project locally, follow these steps:
 
 4. **Install JavaScript Dependencies:**
 - npm install
+- If using the Web Speech API, ensure your browser supports it (e.g., Chrome, Edge).
 
 5. **Set Environment Variables:**
 - Create a `.env` file in the project root and add your GEMINI_API_KEY and GEMINI_HR_API_KEY:
 - GEMINI_API_KEY=your-gemini-api-key
 - GEMINI_HR_API_KEY=your-gemini-hr-api-key
+- GOOGLE_APPLICATION_CREDENTIALS = /path/to/your/GOOGLE_APPLICATION_CREDENTIALS.json/files
 
 6. **Run the Flask App:**
 - uvicorn app.routes.interview_routes:router --host 0.0.0.0 --port 8000 --reload 
@@ -127,6 +132,7 @@ To run this project locally, follow these steps:
 - **Expanded Question Bank:** Include more DSA and HR questions, categorized by industry.
 - **User Profiles:** Allow users to save their progress and track improvement over time.
 - **Advanced AI Feedback:** Integrate more advanced Gemini API features for deeper analysis (e.g., sentiment analysis, code optimization suggestions).
+- **Enhanced Audio Answering:** Improve audio processing with noise cancellation and multi-language support.
 
 ## Contributing
 We welcome contributions to improve AGAIN_GOOGLE! To contribute:
