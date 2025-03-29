@@ -121,9 +121,13 @@ To run this project locally, follow these steps:
 ![Homepage Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image6.png)
 ![Homepage Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image5.png)
 
+### Total Overview
+![Total Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image7.png)
+
 ### Technical Interview Page
 ![Technical Interview Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image4.png)
 ![Technical Interview Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image3.png)
+
 ### HR Interview Page
 ![HR Interview Screenshot](https://raw.githubusercontent.com/Vicky16032205/solution-challenge-2025/master/app/static/images/image2.png)
 
