@@ -103,11 +103,11 @@ To run this project locally, follow these steps:
 - GOOGLE_APPLICATION_CREDENTIALS = /path/to/your/GOOGLE_APPLICATION_CREDENTIALS.json/files
 
 6. **Run the Flask App:**
-- uvicorn app.routes.interview_routes:router --host 0.0.0.0 --port 8000 --reload 
-- The app will run on `http://localhost:8000`.
+- uvicorn app.routes.interview_routes:router --host 0.0.0.0 --port 8080 --reload 
+- The app will run on `http://localhost:8080`.
 
 7. **Access the App:**
-- Open your browser and navigate to `http://localhost:8000`.
+- Open your browser and navigate to `http://localhost:8080`.
 - Explore the homepage, technical interview, HR interview, and DSA questions sections.
 
 ## Solution Challenge Submission Links
