@@ -39,8 +39,9 @@ This project addresses the challenge of preparing for job interviews by offering
   - **Google Gemini APIs**: Used for AI-powered feedback on user responses (e.g., code analysis, behavioral feedback).
   - **Web Speech API**: Used for capturing and processing audio inputs for technical and HR interviews.
 - **Deployment:**
-  - **Render**: Hosted on Render for live deployment.
-  - **GitHub**: Source code hosted on a public GitHub repository.
+- The project is now deployed on **Google Cloud Platform (GCP)** for enhanced scalability and performance. You can access the live application using the link below:
+- **Live App Link:** [https://solution-challenge-2025-220124299530.asia-south2.run.app](AI Interview Helper)
+- **GitHub**: Source code hosted on a public GitHub repository.
 
 ## Project Structure
 ```
@@ -114,7 +115,7 @@ To run this project locally, follow these steps:
 
 - **GitHub Public Repository:** [https://github.com/Vicky16032205/solution-challenge-2025.git](https://github.com/Vicky16032205/solution-challenge-2025.git)
 - **Demo Video Link (3 Minutes):** [https://youtu.be/wQrRw8ThJlI](https://youtu.be/wQrRw8ThJlI)
-- **MVP Link:** [https://solution-challenge-app.onrender.com](https://solution-challenge-app.onrender.com)
+- **MVP Link:** [https://solution-challenge-2025-220124299530.asia-south2.run.app](AI Interview Helper)
 
 ## Screenshots
 ### Homepage
