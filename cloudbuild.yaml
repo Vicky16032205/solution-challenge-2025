@@ -22,3 +22,5 @@ steps:
       - '--allow-unauthenticated'
 images:
   - 'gcr.io/loyal-framework-455214-e3/solution-challenge-2025:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY  # Store logs in Cloud Logging only
