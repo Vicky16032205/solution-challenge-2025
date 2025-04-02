@@ -1,0 +1,24 @@
+steps:
+  - name: 'gcr.io/buildpacks/builder:v1'
+    entrypoint: 'pack'
+    args:
+      - 'build'
+      - 'gcr.io/loyal-framework-455214-e3/solution-challenge-2025:$COMMIT_SHA'
+      - '--builder'
+      - 'gcr.io/buildpacks/builder:v1'
+      - '--path'
+      - '.'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'solution-challenge-2025'
+      - '--image'
+      - 'gcr.io/loyal-framework-455214-e3/solution-challenge-2025:$COMMIT_SHA'
+      - '--region'
+      - 'asia-south2'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+images:
+  - 'gcr.io/loyal-framework-455214-e3/solution-challenge-2025:$COMMIT_SHA'
