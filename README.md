@@ -140,7 +140,7 @@ To run this project locally, follow these steps:
 - **Enhanced Audio Answering:** Improve audio processing with noise cancellation and multi-language support.
 
 ## Contributing
-We welcome contributions to improve AGAIN_GOOGLE! To contribute:
+We welcome contributions to improve AI Interview Helper! To contribute:
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature/your-feature`).
 3. Make your changes and commit (`git commit -m "Add your feature"`).
@@ -151,6 +151,6 @@ We welcome contributions to improve AGAIN_GOOGLE! To contribute:
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
-For any queries, reach out to us at [vickyguptagkp55@gmail.com](mailto:vickyguptagkp55@gmail.com), as provided in the Solution Challenge guidelines.
+For any queries, reach out to us at [vicky Gupta](mailto:vickyguptagkp55@gmail.com), as provided in the Solution Challenge guidelines.
 
 **Built with ❤️ for the Solution Challenge 2025**
