@@ -113,9 +113,9 @@ To run this project locally, follow these steps:
 
 ## Solution Challenge Submission Links
 
-- **GitHub Public Repository:** [https://github.com/Vicky16032205/solution-challenge-2025.git]
-- **Demo Video Link (3 Minutes):** [Videolink](https://youtu.be/wQrRw8ThJlI)
-- **MVP Link:** [https://solution-challenge-2025-220124299530.asia-south2.run.app]
+- **GitHub Public Repository:** [Github Repo](https://github.com/Vicky16032205/solution-challenge-2025.git)
+- **Demo Video Link (3 Minutes):** [Videolink](https://youtu.be/taTcS2ZP0Vs)
+- **MVP Link:** [MVP](https://solution-challenge-2025-220124299530.asia-south2.run.app)
 
 ## Screenshots
 ### Homepage
